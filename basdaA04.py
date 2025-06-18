@@ -27,7 +27,7 @@ def connectDB():
 
 def addPasien(email, user_password, nama, alamat, tanggal_lahir, no_telp, jenis_kelamin):
     conn, cur = connectDB()
-    query_insert = "INSERT INTO pasien(email, user_password, nama, alamat, tanggal_lahir, no_telp, jenis_kelamin) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+    query_insert = "INSERT INTO pasien (email, user_password, nama, alamat, tanggal_lahir, no_telp, jenis_kelamin) VALUES(%s, %s, %s, %s, %s, %s, %s)"
 
     cur.execute(query_insert, (email, user_password, nama, alamat, tanggal_lahir, no_telp, jenis_kelamin))
     conn.commit()
@@ -35,42 +35,42 @@ def addPasien(email, user_password, nama, alamat, tanggal_lahir, no_telp, jenis_
 
 def addRekamMedis(idbooking, diagnosa, tindakan, catatan):
     conn, cur = connectDB()
-    query_insert = "INSERT INTO rekam_medis(id_booking, diagnosa, tindakan, catatan_dokter) VALUES(%s, %s, %s, %s)"
+    query_insert = "INSERT INTO rekam_medis (id_booking, diagnosa, tindakan, catatan_dokter) VALUES(%s, %s, %s, %s)"
     cur.execute(query_insert, (idbooking, diagnosa, tindakan, catatan))
     conn.commit()
     conn.close()
 
 def addResepObat(idrm, ambil2, quantity, frekuensi):
     conn, cur = connectDB()
-    query_insert = "INSERT INTO resep_obat(id_rekam_medis, id_obat, quantity, frekuensi) VALUES(%s, %s, %s, %s)"
+    query_insert = "INSERT INTO resep_obat (id_rekam_medis, id_obat, quantity, frekuensi) VALUES(%s, %s, %s, %s)"
     cur.execute(query_insert, (idrm, ambil2, quantity, frekuensi))
     conn.commit()
     conn.close()
 
 def addTagihan(id_booking, tanggal_transaksi, metode_pembayaran, status_pembayaran):
     conn, cur = connectDB()
-    query_insert = "INSERT INTO transaksi(id_booking, tanggal_transaksi, metode_pembayaran, status_pembayaran) VALUES(%s, %s, %s, %s)"
+    query_insert = "INSERT INTO transaksi (id_booking, tanggal_transaksi, metode_pembayaran, status_pembayaran) VALUES(%s, %s, %s, %s)"
     cur.execute(query_insert, (id_booking, tanggal_transaksi, metode_pembayaran, status_pembayaran))
     conn.commit()
     conn.close()
 
 def addObat(nama_obat, jenis_obat, stok_obat, harga_obat):
     conn, cur = connectDB()
-    query_insert = "INSERT INTO obat(nama_obat, jenis_obat, stok_obat, harga_obat) VALUES(%s, %s, %s, %s)"
+    query_insert = "INSERT INTO obat (nama_obat, jenis_obat, stok_obat, harga_obat) VALUES(%s, %s, %s, %s)"
     cur.execute(query_insert, (nama_obat, jenis_obat, stok_obat, harga_obat))
     conn.commit()
     conn.close()
 
 def addDokter(email, user_password, nama, spesialisasi, alamat, no_telp, biaya_konsultasi):
     conn, cur = connectDB()
-    query_insert = "INSERT INTO obat(email, user_password, nama, spesialisasi, alamat, no_telp, biaya_konsultasi) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+    query_insert = "INSERT INTO dokter (email, user_password, nama, spesialisasi, alamat, no_telp, biaya_konsultasi) VALUES(%s, %s, %s, %s, %s, %s, %s)"
     cur.execute(query_insert, (email, user_password, nama, spesialisasi, alamat, no_telp, biaya_konsultasi))
     conn.commit()
     conn.close()
 
 def addJadwal(id_dokter, jadwal_praktik, jam_mulai, jam_selesai, batas_booking):
     conn, cur = connectDB()
-    query_insert = "INSERT INTO obat(id_dokter, jadwal_praktik, jam_mulai, jam_selesai, batas_booking) VALUES(%s, %s, %s, %s, %s)"
+    query_insert = "INSERT INTO jadwal_konsultasi (id_dokter, jadwal_praktik, jam_mulai, jam_selesai, batas_booking) VALUES(%s, %s, %s, %s, %s)"
     cur.execute(query_insert, (id_dokter, jadwal_praktik, jam_mulai, jam_selesai, batas_booking))
     conn.commit()
     conn.close()
@@ -113,7 +113,7 @@ def updateDataDokter(email, user_password, nama, spesialisasi, alamat, no_telp, 
 def updateDataJadwal(id_dokter, jadwal_praktik, jam_mulai, jam_selesai, batas_booking, id_jadwal):
     try:
         conn, cur = connectDB()
-        query_update = "UPDATE jadwal SET id_dokter = %s, jadwal_praktik = %s, jam_mulai = %s, jam_selesai = %s, batas_booking = %s WHERE id_jadwal = %s"        
+        query_update = "UPDATE jadwal_konsultasi SET id_dokter = %s, jadwal_praktik = %s, jam_mulai = %s, jam_selesai = %s, batas_booking = %s WHERE id_jadwal = %s"        
         cur.execute(query_update, (id_dokter, jadwal_praktik, jam_mulai, jam_selesai, batas_booking, id_jadwal))
         conn.commit()
         conn.close()
@@ -159,7 +159,7 @@ def updateMetodeTransaksi(status_konsultasi, id_transaksi):
 def deleteObatById(id):
     try :
         conn, cur = connectDB()
-        query_delete = "DELETE * FROM obat WHERE id_obat = %s"
+        query_delete = "DELETE FROM obat WHERE id_obat = %s"
         cur.execute(query_delete, (id,))
         conn.commit()
         conn.close()
@@ -171,9 +171,10 @@ def deleteObatById(id):
 def deletePasienById(id):
     try :
         conn, cur = connectDB()
-        query_delete = "DELETE * FROM pasien WHERE id_pasien = %s"
+        query_delete = "DELETE FROM pasien WHERE id_pasien = %s"
         cur.execute(query_delete, (id,))
         conn.commit()
+        print('hi')
         conn.close()
     except Exception :
         conn.rollback()
@@ -183,7 +184,7 @@ def deletePasienById(id):
 def deleteDokterById(id):
     try :
         conn, cur = connectDB()
-        query_delete = "DELETE * FROM dokter WHERE id_dokter = %s"
+        query_delete = "DELETE FROM dokter WHERE id_dokter = %s"
         cur.execute(query_delete, (id,))
         conn.commit()
         conn.close()
@@ -195,7 +196,7 @@ def deleteDokterById(id):
 def deleteJadwalById(id):
     try :
         conn, cur = connectDB()
-        query_delete = "DELETE * FROM jadwal_konsultasi WHERE id_jadwal = %s"
+        query_delete = "DELETE FROM jadwal_konsultasi WHERE id_jadwal = %s"
         cur.execute(query_delete, (id,))
         conn.commit()
         conn.close()
@@ -222,7 +223,7 @@ def getAllPasien():
     query_select = "SELECT * FROM pasien"
     cur.execute(query_select)
     data = cur.fetchall()
-    data = pd.DataFrame(data, columns=["id_pasien", "email", "password", "nama", "alamat", "tanggal lahir", "no telp", "jenis kelamin"])
+    data = pd.DataFrame(data, columns=["id_pasien", "email", "password", "nama", "alamat", "tanggal_lahir", "no_telp", "jenis_kelamin"])
     data.index += 1
     conn.close()
     return data
@@ -267,29 +268,29 @@ def menuadmin(nama):
         header("Dashboard Admin")
         print(f"Selamat Datang Kembali, {nama}!\n")
         input1 = int(input("[1]Kelola Obat\n[2]Kelola Pasien\n[3]Kelola Dokter\n[4]Kelola Jadwal\n[5]Kelola Reservasi\n[6]Tagihan dan Transaksi\n[0]Keluar\n\nPilih menu : "))
-        dataobat = getAllObat()
-        datapasien = getAllPasien()
-        datadokter = getAllDokter()
-        datajadwal = getAllJadwal()
         match input1:
             case 1:
                 while True:
                     header("Kelola Obat")
-                    input1 = int(input("[1]Lihat Data Obat\n[2]Tambahkan Data Obat\n[3]Ubah Data Obat\n[4]Hapus Data Obat\n[0]Keluar\nMasukkan pilihan (1/2/3/4/0) : "))
+                    dataobat = getAllObat()
+                    input1 = int(input("[1]Lihat Data Obat\n[2]Tambahkan Data Obat\n[3]Ubah Data Obat\n[4]Hapus Data Obat\n[0]Kembali\nMasukkan pilihan (1/2/3/4/0) : "))
                     match input1:
                         case 1:
+                            header("Kelola Obat > Lihat Data Obat")
                             print(dataobat)
                             input("(Enter untuk melanjutkan.)")
                         case 2 :
-                            nama_obat = input("Nama obat \t: ")
-                            jenis_obat = input("Jenis Obat \t: ")
+                            header("Kelola Obat > Tambahkan Data Obat")
+                            nama_obat = input("Nama obat \t\t: ")
+                            jenis_obat = input("Jenis Obat \t\t: ")
                             stok_obat = int(input("Stok obat (angka) \t: "))
                             harga_obat = int(input("Harga obat (angka) \t: "))
                             addObat(nama_obat, jenis_obat, stok_obat, harga_obat)
-                            input(f"|    Data {nama_obat}berhasil ditambahkan! \n(Enter untuk kembali.)")
+                            input(f"|    Data {nama_obat} berhasil ditambahkan! \n(Enter untuk kembali.)")
                         case 3 :
+                            header("Kelola Obat > Ubah Data Obat")
                             print(dataobat)
-                            id_obat = input("Masukkan id obat \t:")
+                            id_obat = int(input("Masukkan id obat \t:"))
                             nama_obat = input("Masukkan data baru\nNama obat \t: ")
                             jenis_obat = input("Jenis Obat \t: ")
                             stok_obat = int(input("Stok obat (angka) \t: "))
@@ -297,18 +298,20 @@ def menuadmin(nama):
                             updateDataObat(nama_obat, jenis_obat, stok_obat, harga_obat, id_obat)
                             input("|    Data berhasil diperbarui!\n(Enter untuk kembali.)")
                         case 4 :
+                            header("Kelola Obat > Hapus Data Obat")
                             print(dataobat)
-                            id_obat = input("Masukkan id obat \t:")
+                            id_obat = int(input("Masukkan id obat \t:"))
                             deleteObatById(id_obat)
                             input("|    Data berhasil dihapus!\n(Enter untuk kembali.)")
                         case 0:
                             break
                         case _:
-                            input("|   Input tidak valid, dianggap 'Tidak'. \n(Enter untuk kembali.)")
+                            input("|   Input tidak valid, dianggap 'Kembali'. \n(Enter untuk kembali.)")
                             break
             case 2:
                 while True:
                     header("Kelola Pasien")
+                    datapasien = getAllPasien()
                     input2 = int(input("[1]Lihat Data Pasien\n[2]Ubah Data Pasien\n[3]Hapus Data Pasien\n[0]Keluar\nMasukkan pilihan (1/2/3/0) : "))
                     match input2:
                         case 1:
@@ -316,7 +319,7 @@ def menuadmin(nama):
                             input("(Enter untuk kembali.)")
                         case 2 :
                             print(datapasien)
-                            id_pasien = input("Masukkan id pasien \t:")
+                            id_pasien = int(input("Masukkan id pasien \t:"))
                             baris = datapasien[datapasien['id_pasien'] == id_pasien]
                             tanya = int(input("[1]Email dan Password\n[2]Data Diri Pasien\nMasukkan pilihan (1/2):"))
                             match tanya:
@@ -344,7 +347,7 @@ def menuadmin(nama):
                             input("|    Data berhasil diperbarui!\n(Enter untuk kembali.)")
                         case 3 :
                             print(datapasien)
-                            id_obat = input("Masukkan id pasien \t:")
+                            id_pasien = int(input("Masukkan id pasien \t:"))
                             deletePasienById(id_pasien)
                             input("|    Data berhasil dihapus!\n(Enter untuk kembali.)")
                         case 0:
@@ -355,6 +358,7 @@ def menuadmin(nama):
             case 3:
                 while True:
                     header("Kelola Dokter")
+                    datadokter = getAllDokter()
                     input3 = int(input("[1]Lihat Data Dokter\n[2]Tambahkan Data Dokter\n[3]Ubah Data Dokter\n[4]Hapus Data Dokter\n[0]Keluar\nMasukkan pilihan (1/2/3/4/0) : "))
                     match input3:
                         case 1:
@@ -372,7 +376,7 @@ def menuadmin(nama):
                             input(f"|    Data {nama_dokter} berhasil ditambahkan! \n(Enter untuk kembali.)")
                         case 3 :
                             print(datadokter)
-                            id_dokter = input("Masukkan id dokter \t:")
+                            id_dokter = int(input("Masukkan id dokter \t:"))
                             barisdokter = datadokter[datadokter['id_dokter'] == id_dokter]
                             tanya = int(input("[1]Email dan Password\n[2]Data Diri Dokter\nMasukkan pilihan (1/2):"))
                             match tanya:
@@ -396,7 +400,7 @@ def menuadmin(nama):
                             input("|    Data berhasil diperbarui!\n(Enter untuk melanjutkan.)")
                         case 4 :
                             print(datadokter)
-                            id_dokter = input("Masukkan id dokter \t:")
+                            id_dokter = int(input("Masukkan id dokter \t:"))
                             deleteDokterById(id_dokter)
                             input("|    Data berhasil dihapus!\n(Enter untuk kembali.)")
                         case 0:
@@ -407,6 +411,8 @@ def menuadmin(nama):
             case 4:
                 while True:
                     header("Kelola Jadwal")
+                    datajadwal = getAllJadwal()
+                    datadokter = getAllDokter()
 
                     conn, cur = connectDB()
                     query_select = "SELECT jk.id_jadwal, d.nama, jk.jadwal_praktik, jk.jam_mulai, jk.jam_selesai, jk.batas_booking FROM jadwal_konsultasi jk\
@@ -452,7 +458,7 @@ def menuadmin(nama):
                             input(f"|    Data berhasil ditambahkan! \n(Enter untuk kembali.)")
                         case 3 :
                             print(datajadwaltampil)
-                            id_jadwal = input("Masukkan id jadwal \t:")
+                            id_jadwal = int(input("Masukkan id jadwal \t:"))
                             barisjadwal = datajadwal[datajadwal['id_jadwal'] == id_jadwal]
                             id_dokter = barisjadwal['id_dokter'].values[0]
                             jadwal_praktik = int(input("[1]Sunday\n[2]Monday\n[3]Tuesday\n[4]Wednesday\n[5]Thursday\n[6]Friday\n[7]Saturday\n\nMasukkan hari (1/2/3/4/5/6/7) :"))
@@ -482,7 +488,7 @@ def menuadmin(nama):
                             input(f"|    Data berhasil diperbarui! \n(Enter untuk kembali.)")
                         case 4 :
                             print(datajadwaltampil)
-                            id_jadwal = input("Masukkan id jadwal \t:")
+                            id_jadwal = int(input("Masukkan id jadwal \t:"))
                             deleteJadwalById(id_jadwal)
                             input("|    Data berhasil dihapus!\n(Enter untuk kembali.)")
                         case 0:
@@ -512,7 +518,7 @@ def menuadmin(nama):
                             input("(Enter untuk kembali.)")
                         case 2 :
                             print(datareservasitampil)
-                            id_booking = input("Masukkan id booking \t:")
+                            id_booking = int(input("Masukkan id booking \t:"))
                             status_konsultasi = input("[1]menunggu\n[2]selesai\n[3]dibatalkan")
                             updateStatusBooking(status_konsultasi, id_booking)
                             input(f"|    Data berhasil diperbarui! \n(Enter untuk kembali.)")
@@ -574,7 +580,6 @@ def menuadmin(nama):
                 input("(Enter untuk melanjutkan.)")
                 break
 
-menuadmin('Lia')
 #-------------------------------------------------------------------------------------------
 
 def jadwaldokter(nama):
@@ -993,4 +998,4 @@ def homepage():
         case _:
             print("Maaf, input tidak valid.")
 
-homepage()
+menuadmin('Farhan Syahbana')
