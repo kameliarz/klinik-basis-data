@@ -998,4 +998,4 @@ def homepage():
         case _:
             print("Maaf, input tidak valid.")
 
-menuadmin('Farhan Syahbana')
+homepage()
